@@ -1,111 +1,19 @@
 version: '3' #docker-compose.yml
 networks:
   integration:
-  bugreports:
-  documentation:
 services:
-  mantisbt: #MANTIS
-    container_name: mantis
-    image: vimagick/mantisbt:latest
-    # command: bash -c "./script/install.sh administrator root"
-    ports:
-      - "8989:80"
-    links:
-      - mysql_mantis
-    restart: always
-    volumes:
-      - ./mantis/html/config_defaults_inc.php:/var/www/html/config_defaults_inc.php
-    depends_on:
-      - mysql_mantis
-    networks:
-      - bugreports
-  mysql_mantis: #MYSQL MANTIS
-    container_name: mysql_mantis
-    image: mysql:5.7
-    environment:
-      - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_DATABASE=bugtracker
-      - MYSQL_USER=mantisbt
-      - MYSQL_PASSWORD=mantisbt
-    restart: always
-    networks:
-      - bugreports
-  sonarqube: #SONAR
-    image: sonarqube:6.7.5
-    ports:
-      - 9000:9000
-      - 9092:9092
-    container_name: sonarqube
-    networks:
-    - integration
-  nexus:
-    image: sonatype/nexus
-    ports:
-      - 8081:8081
-    environment:
-      - MAX_HEAP=768m
-    networks:
-      - integration
   jenkins: #JENKINS
-    image: jenkins
+    image: jenkins/jenkins:2.138.3
     privileged: true
     user: root
     ports:
-      - 8181:8080
+      - 8282:8080
       - 50000:50000
     container_name: jenkins
     networks:
     - integration
     volumes:
-      - /var/jenkins:/var/jenkins_home #Remember that, the tmp directory is designed to be wiped on system reboot.
-      - /var/run/docker.sock:/var/run/docker.sock
-    depends_on:
-      - sonarqube
-  mediawiki_wiki: #WIKI
-    #build: ./../../../ # Uncomment to build from source
-    image: kristophjunge/mediawiki
-    container_name: mediawiki_wiki
-    environment:
-      MEDIAWIKI_SERVER: http://localhost:8080
-      MEDIAWIKI_SITENAME: MyWiki
-      MEDIAWIKI_LANGUAGE_CODE: en
-      MEDIAWIKI_SECRET_KEY: a6578339c8f73c8721b43241056d28af5be10dd922cd426ef10f086dd590aa8e
-      MEDIAWIKI_DB_TYPE: mysql
-      MEDIAWIKI_DB_HOST: mediawiki_db
-      MEDIAWIKI_DB_PORT: 3306
-      MEDIAWIKI_DB_NAME: wikidb
-      MEDIAWIKI_DB_USER: wikiuser #USER LOGIN
-      MEDIAWIKI_DB_TABLE_OPTIONS: ENGINE=InnoDB, DEFAULT CHARSET=binary
-      MEDIAWIKI_DB_PASSWORD: mysecret #PASS LOGIN
-      MEDIAWIKI_ENABLE_UPLOADS: 1
-      MEDIAWIKI_EXTENSION_VISUAL_EDITOR_ENABLED: 1
-      MEDIAWIKI_DEFAULT_SKIN: vector
-      MEDIAWIKI_SMTP: 1
-      MEDIAWIKI_SMTP_HOST: smtp.gmail.com
-      MEDIAWIKI_SMTP_IDHOST: gmail.com
-      MEDIAWIKI_SMTP_PORT: 587
-      MEDIAWIKI_SMTP_AUTH: 1
-      MEDIAWIKI_SMTP_USERNAME: ccem.projects@gmail.com
-      MEDIAWIKI_SMTP_PASSWORD: senha
-    links:
-     - mediawiki_db
-    ports:
-      - 8080:8080
-    depends_on:
-      - mediawiki_db
-    volumes:
-      # - mediawiki_images:/images
-      - ./wiki/image/logo.png:/var/www/mediawiki/resources/assets/wiki.png:ro
-  mediawiki_db: # WIKI MYSQL
-    image: mariadb
-    container_name: mediawiki_db
-    environment:
-      MYSQL_DATABASE: wikidb
-      MYSQL_USER: wikiuser
-      MYSQL_PASSWORD: mysecret
-      MYSQL_RANDOM_ROOT_PASSWORD: 1
-    # volumes:
-    # - mediawiki_db:/var/lib/mysql
-# volumes:
-  # mediawiki_images:
-  # mediawiki_db:
+      - ./jenkins/home:/var/jenkins_home:rw #Remember that, the tmp directory is designed to be wiped on system reboot.
+      - ./jenkins/install/install_jenkins_plugins.sh:/install_jenkins_plugins.sh
+      - ./jenkins/install/plugins.txt:/plugins.txt
+

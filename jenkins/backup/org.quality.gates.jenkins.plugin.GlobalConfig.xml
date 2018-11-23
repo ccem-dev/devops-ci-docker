@@ -1,0 +1,15 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<org.quality.gates.jenkins.plugin.GlobalConfig plugin="sonar-quality-gates@1.3.1">
+  <listOfGlobalConfigData>
+    <org.quality.gates.jenkins.plugin.GlobalConfigDataForSonarInstance>
+      <name>sonar</name>
+      <sonarUrl>http://sonar.inf.otus-solutions.com.br/projects</sonarUrl>
+      <token>81ce10e480129cc17ce675a686f7768acea816dc</token>
+      <timeToWait>0</timeToWait>
+      <maxWaitTime>0</maxWaitTime>
+    </org.quality.gates.jenkins.plugin.GlobalConfigDataForSonarInstance>
+  </listOfGlobalConfigData>
+  <globalConfigurationService>
+    <listOfGlobalConfigInstances reference="../../listOfGlobalConfigData"/>
+  </globalConfigurationService>
+</org.quality.gates.jenkins.plugin.GlobalConfig>

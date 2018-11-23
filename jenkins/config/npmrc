@@ -1,0 +1,7 @@
+init.author.name = Administrator User
+init.author.email = admin@example.org
+init.author.url = http://otus-solutions.com.br
+# an email is required to publish npm packages
+email=admin@example.org
+always-auth=true
+_auth=YWRtaW46YWRtaW4xMjM=

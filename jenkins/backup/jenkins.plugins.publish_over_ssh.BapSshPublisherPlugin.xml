@@ -1,0 +1,11 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<jenkins.plugins.publish__over__ssh.BapSshPublisherPlugin_-Descriptor plugin="publish-over-ssh@1.20.1">
+  <hostConfigurations/>
+  <commonConfig>
+    <secretPassphrase>{AQAAABAAAACA4SNuRMFpnOy4eXvxFq/TdKzq9RCYUcg5Y3KzwFMTJg6g28BpL3K54eBJVqBn6RcQ+M6xFinNPj/w0m6qs/ATNqWOHLOazAhVeQyyiotZVFjoZSpN4H32DTvFU/NEnx8biDlORrOAXU/s2kYmOk5MLtVjeEVogxcyYrpvWo66uaxGZ6q9VoFc9uFGzFfKRonq}</secretPassphrase>
+    <key></key>
+    <keyPath></keyPath>
+    <disableAllExec>false</disableAllExec>
+  </commonConfig>
+  <defaults class="jenkins.plugins.publish_over_ssh.options.SshPluginDefaults"/>
+</jenkins.plugins.publish__over__ssh.BapSshPublisherPlugin_-Descriptor>

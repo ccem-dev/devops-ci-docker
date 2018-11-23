@@ -1,2 +1,7 @@
 login: admin
 pass: admin
+
+
+batch-install-jenkins-plugins.sh --plugins iplugins --plugindir /var/jenkins_home/plugins
+
+./install_jenkins_plugins.sh $(echo $(cat plugins.txt))
