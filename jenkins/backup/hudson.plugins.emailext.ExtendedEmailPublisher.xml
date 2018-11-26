@@ -3,7 +3,10 @@
   <defaultSuffix>@gmail.com</defaultSuffix>
   <mailAccount>
     <smtpHost>smtp.gmail.com</smtpHost>
-    <useSsl>false</useSsl>
+    <smtpPort>465</smtpPort>
+    <smtpUsername>ccem.projects@gmail.com</smtpUsername>
+    <smtpPassword>{AQAAABAAAAAQBSSvkcPtlRStBtC26sSUHDWcODExeWQkvbUeIhjCIz0=}</smtpPassword>
+    <useSsl>true</useSsl>
   </mailAccount>
   <addAccounts/>
   <charset>UTF-8</charset>

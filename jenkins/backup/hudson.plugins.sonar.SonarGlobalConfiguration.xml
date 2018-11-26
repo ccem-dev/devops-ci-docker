@@ -4,7 +4,7 @@
     <hudson.plugins.sonar.SonarInstallation>
       <name>sonar</name>
       <serverUrl>http://sonar.inf.otus-solutions.com.br</serverUrl>
-      <serverAuthenticationToken>{AQAAABAAAAAwPT65Py5fqRy4tup8/PTzeSAr4Q8IXCEADwgDWzJfC9KjGOVlbgorn+2UWuxa49dzbVdS47Jx+i3ZrceNMq7I2w==}</serverAuthenticationToken>
+      <serverAuthenticationToken>{AQAAABAAAAAwW4rLHJHtAfmT+MZu16vz/ctzXH2RlzYCZx2ShXJyo4A54bF3eR5sFS425c24+5xc5jPvvtt50H8IRrAh+x5YsQ==}</serverAuthenticationToken>
       <mojoVersion></mojoVersion>
       <additionalProperties></additionalProperties>
       <additionalAnalysisProperties></additionalAnalysisProperties>

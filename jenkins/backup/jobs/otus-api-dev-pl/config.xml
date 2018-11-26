@@ -12,13 +12,6 @@
   <description></description>
   <keepDependencies>false</keepDependencies>
   <properties>
-    <org.jenkinsci.plugins.workflow.job.properties.PipelineTriggersJobProperty>
-      <triggers>
-        <com.cloudbees.jenkins.GitHubPushTrigger plugin="github@1.29.3">
-          <spec></spec>
-        </com.cloudbees.jenkins.GitHubPushTrigger>
-      </triggers>
-    </org.jenkinsci.plugins.workflow.job.properties.PipelineTriggersJobProperty>
     <hudson.model.ParametersDefinitionProperty>
       <parameterDefinitions>
         <hudson.model.StringParameterDefinition>
@@ -39,9 +32,25 @@
       <projectUrl>https://github.com/ccem-dev/otus-api/</projectUrl>
       <displayName></displayName>
     </com.coravy.hudson.plugins.github.GithubProjectProperty>
+    <org.jenkinsci.plugins.workflow.job.properties.PipelineTriggersJobProperty>
+      <triggers>
+        <com.cloudbees.jenkins.GitHubPushTrigger plugin="github@1.29.3">
+          <spec></spec>
+        </com.cloudbees.jenkins.GitHubPushTrigger>
+      </triggers>
+    </org.jenkinsci.plugins.workflow.job.properties.PipelineTriggersJobProperty>
   </properties>
   <definition class="org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition" plugin="workflow-cps@2.60">
-    <script>def notifyStart(){
+    <script>def notifyEmail(){
+    emailext (
+        subject: &apos;$DEFAULT_SUBJECT&apos;,
+        body: &apos;$DEFAULT_CONTENT&apos;,
+        recipientProviders: [[$class: &apos;DevelopersRecipientProvider&apos;]], 
+        replyTo: &apos;$DEFAULT_REPLYTO&apos;,
+        to: &apos;$DEFAULT_RECIPIENTS&apos;
+        )
+}
+def notifyStart(){
      slackSend channel: &apos;#otus-plataform&apos;, 
                     color: &apos;#FC0&apos;, 
                     message: &quot;STARTED: Job &apos;${env.JOB_NAME} [${env.BUILD_NUMBER}]&apos; (${env.BUILD_URL})&quot;, 
@@ -95,14 +104,14 @@ pipeline {
             withSonarQubeEnv(&apos;sonar&apos;) {
               sh &apos;mvn -f otus-root/pom.xml sonar:sonar&apos;
             }
-            // script {
-            //     timeout(time: 1, unit: &apos;HOURS&apos;) {
-            //         def qualityGate = waitForQualityGate() 
-            //         if (qualityGate.status != &apos;OK&apos;) {
-            //             error &quot;O código não está de acordo com as regras do Sonar: ${qualityGate.status}&quot;
-            //         }
-            //     }
-            // }
+            script {
+                timeout(time: 1, unit: &apos;HOURS&apos;) {
+                    def qualityGate = waitForQualityGate() 
+                    if (qualityGate.status != &apos;OK&apos;) {
+                        error &quot;O código não está de acordo com as regras do Sonar: ${qualityGate.status}&quot;
+                    }
+                }
+            }
         }
 
     }
