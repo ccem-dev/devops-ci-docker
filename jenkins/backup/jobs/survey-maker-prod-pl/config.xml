@@ -1,0 +1,84 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<flow-definition plugin="workflow-job@2.29">
+  <description></description>
+  <keepDependencies>false</keepDependencies>
+  <properties>
+    <com.coravy.hudson.plugins.github.GithubProjectProperty plugin="github@1.29.3">
+      <projectUrl>https://github.com/ccem-dev/survey-maker/</projectUrl>
+      <displayName></displayName>
+    </com.coravy.hudson.plugins.github.GithubProjectProperty>
+    <org.jenkinsci.plugins.workflow.job.properties.PipelineTriggersJobProperty>
+      <triggers/>
+    </org.jenkinsci.plugins.workflow.job.properties.PipelineTriggersJobProperty>
+  </properties>
+  <definition class="org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition" plugin="workflow-cps@2.60">
+    <script>def notifyEmail(){
+    emailext (
+        subject: &apos;$DEFAULT_SUBJECT&apos;,
+        body: &apos;$DEFAULT_CONTENT&apos;,
+        recipientProviders: [[$class: &apos;DevelopersRecipientProvider&apos;]], 
+        replyTo: &apos;$DEFAULT_REPLYTO&apos;,
+        to: &apos;$DEFAULT_RECIPIENTS&apos;
+        )
+}
+def notifyStart(){
+     slackSend channel: &apos;#otus-plataform&apos;, 
+                    color: &apos;#FC0&apos;, 
+                    message: &quot;STARTED: Job &apos;${env.JOB_NAME} [${env.BUILD_NUMBER}]&apos; (${env.BUILD_URL})&quot;, 
+                    teamDomain: &apos;otussolutions&apos;, 
+                    token: &apos;OIctpW2cDE8MpIC4uRDfEJpi&apos;
+}
+pipeline {
+	agent any
+		tools {
+			maven &apos;maven 3.5.0&apos;
+			jdk &apos;Java7&apos;
+		}
+
+	stages {
+	     stage(&apos;Checkout Repository&apos;){
+            steps{
+                // sh &quot;sudo rm rf *&quot;
+                git(url: &apos;git@github.com:ccem-dev/survey-maker.git&apos;, 
+                credentialsId: &apos;5c08db6f-ba8a-4e32-b867-d90ec54186b4&apos;,
+                branch: &quot;master&quot;)
+                notifyStart()
+  
+            }
+            post {
+                failure{
+                    notifyEmail()
+                }
+            }
+    }
+		stage(&apos;Build Code&apos;) {
+			steps {
+				sh &apos;mvn -f survey-root/pom.xml clean install -DskipTests&apos;
+			}
+			post {
+                failure{
+                    notifyEmail()
+                }
+            }
+		}
+
+		stage(&apos;Run Unit Tests&apos;) {
+			steps {
+				sh &apos;mvn -f survey-root/pom.xml test&apos;
+			}
+			post {
+                always{
+                    notifyEmail()
+                }
+            }
+		}
+
+	
+	}
+
+}</script>
+    <sandbox>true</sandbox>
+  </definition>
+  <triggers/>
+  <disabled>false</disabled>
+</flow-definition>

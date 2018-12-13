@@ -47,18 +47,22 @@ services:
     networks:
       - integration
   jenkins: #JENKINS
-    image: jenkins
+    image: jenkins/jenkins:2.138.3
     privileged: true
     user: root
     ports:
       - 8181:8080
       - 50000:50000
     container_name: jenkins
+    # entrypoint: ./jenkins/entrypoint.sh
     networks:
     - integration
     volumes:
-      - /var/jenkins:/var/jenkins_home #Remember that, the tmp directory is designed to be wiped on system reboot.
-      - /var/run/docker.sock:/var/run/docker.sock
+      - ./jenkins/home:/var/jenkins_home:rw #Remember that, the tmp directory is designed to be wiped on system reboot.
+      - ./jenkins/install/install_jenkins_plugins.sh:/install_jenkins_plugins.sh
+      - ./jenkins/install/plugins.txt:/plugins.txt
+      - ./jenkins/entrypoint.sh:/entrypoint.sh
+    restart: always
     depends_on:
       - sonarqube
   mediawiki_wiki: #WIKI
@@ -104,8 +108,8 @@ services:
       MYSQL_USER: wikiuser
       MYSQL_PASSWORD: mysecret
       MYSQL_RANDOM_ROOT_PASSWORD: 1
-    # volumes:
-    # - mediawiki_db:/var/lib/mysql
-# volumes:
-  # mediawiki_images:
-  # mediawiki_db:
+    volumes:
+    - mediawiki_db:/var/lib/mysql
+volumes:
+  mediawiki_images:
+  mediawiki_db:

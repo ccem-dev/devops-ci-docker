@@ -1,0 +1,12 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<org.jenkinsci.plugins.pipeline.maven.GlobalPipelineMavenConfig plugin="pipeline-maven@3.6.1">
+  <triggerDownstreamUponResultSuccess>true</triggerDownstreamUponResultSuccess>
+  <triggerDownstreamUponResultUnstable>true</triggerDownstreamUponResultUnstable>
+  <triggerDownstreamUponResultFailure>true</triggerDownstreamUponResultFailure>
+  <triggerDownstreamUponResultNotBuilt>true</triggerDownstreamUponResultNotBuilt>
+  <triggerDownstreamUponResultAborted>true</triggerDownstreamUponResultAborted>
+  <jdbcUrl></jdbcUrl>
+  <jdbcCredentialsId></jdbcCredentialsId>
+  <properties></properties>
+  <publisherOptions/>
+</org.jenkinsci.plugins.pipeline.maven.GlobalPipelineMavenConfig>
