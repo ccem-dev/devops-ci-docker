@@ -14,9 +14,9 @@ services:
     networks:
     - integration
     volumes:
-      - ./jenkins/home:/var/jenkins_home:rw #Remember that, the tmp directory is designed to be wiped on system reboot.
-      - ./jenkins/install/install_jenkins_plugins.sh:/install_jenkins_plugins.sh
-      - ./jenkins/install/plugins.txt:/plugins.txt
+      - ./jenkins/persistence:/var/jenkins_home:rw
+      - ./jenkins/plugins/install_jenkins_plugins.sh:/install_jenkins_plugins.sh
+      - ./jenkins/plugins/plugins.txt:/plugins.txt
       - ./jenkins/entrypoint.sh:/entrypoint.sh
     restart: always
   otus_jenkins:
@@ -32,8 +32,8 @@ services:
     depends_on:
       - jenkins
     volumes:
-      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
-      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/persistence/sites-enabled:/etc/nginx/sites-enabled/
+      - ./nginx/persistence/nginx.conf:/etc/nginx/nginx.conf
     networks:
       - integration
     ports:
