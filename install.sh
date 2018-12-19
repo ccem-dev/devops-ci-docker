@@ -16,11 +16,11 @@ fi
 
 sudo docker-compose down
 
-sudo mkdir ./nginx/persistence/
-sudo cp -R ./nginx/config/ ./nginx/persistence/
+mkdir ./nginx/persistence/
+sudo cp -R ./nginx/config/* ./nginx/persistence/
 sed -i "s/localhost/$jenkins/g" ./nginx/persistence/sites-enabled/jenkins.conf
 
-sudo mkdir ./jenkins/persistence/
+mkdir ./jenkins/persistence/
 sudo cp -R jenkins/backup/* jenkins/persistence/
 sudo docker-compose up -d
 sudo docker exec -it jenkins /bin/bash ./entrypoint.sh
