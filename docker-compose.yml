@@ -19,8 +19,8 @@ services:
       - ./jenkins/plugins/plugins.txt:/plugins.txt
       - ./jenkins/entrypoint.sh:/entrypoint.sh
     restart: always
-  otus_jenkins:
-    container_name: otus_jenkins
+  nginx:
+    container_name: nginx
     image: nginx:1.15.5
     command:
       - 'nginx'
