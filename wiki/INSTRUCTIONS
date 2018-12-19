@@ -1,2 +1,0 @@
-#After up containers, execute this command in terminal:
-$ docker exec -it mediawiki_wiki /script/install.sh <user> <password>
