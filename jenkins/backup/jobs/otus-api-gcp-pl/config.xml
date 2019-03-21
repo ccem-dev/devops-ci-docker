@@ -12,6 +12,14 @@
   <description></description>
   <keepDependencies>false</keepDependencies>
   <properties>
+    <jenkins.model.BuildDiscarderProperty>
+      <strategy class="hudson.tasks.LogRotator">
+        <daysToKeep>-1</daysToKeep>
+        <numToKeep>5</numToKeep>
+        <artifactDaysToKeep>-1</artifactDaysToKeep>
+        <artifactNumToKeep>-1</artifactNumToKeep>
+      </strategy>
+    </jenkins.model.BuildDiscarderProperty>
     <hudson.model.ParametersDefinitionProperty>
       <parameterDefinitions>
         <hudson.model.StringParameterDefinition>
@@ -41,16 +49,16 @@
     emailext (
         subject: &apos;$DEFAULT_SUBJECT&apos;,
         body: &apos;$DEFAULT_CONTENT&apos;,
-        recipientProviders: [[$class: &apos;DevelopersRecipientProvider&apos;]], 
+        recipientProviders: [[$class: &apos;DevelopersRecipientProvider&apos;]],
         replyTo: &apos;$DEFAULT_REPLYTO&apos;,
         to: &apos;$DEFAULT_RECIPIENTS&apos;
         )
 }
 def notifyStart(){
-     slackSend channel: &apos;#otus-plataform&apos;, 
-                    color: &apos;#FC0&apos;, 
-                    message: &quot;STARTED: Job &apos;${env.JOB_NAME} [${env.BUILD_NUMBER}]&apos; (${env.BUILD_URL})&quot;, 
-                    teamDomain: &apos;otussolutions&apos;, 
+     slackSend channel: &apos;#otus-plataform&apos;,
+                    color: &apos;#FC0&apos;,
+                    message: &quot;STARTED: Job &apos;${env.JOB_NAME} [${env.BUILD_NUMBER}]&apos; (${env.BUILD_URL})&quot;,
+                    teamDomain: &apos;otussolutions&apos;,
                     token: &apos;OIctpW2cDE8MpIC4uRDfEJpi&apos;
 }
 pipeline {
@@ -63,8 +71,8 @@ pipeline {
   stages {
     stage(&apos;Checkout Repository&apos;){
         steps{
-            git(url: &apos;https://github.com/ccem-dev/otus-api.git&apos;, 
-            credentialsId: &apos;5c08db6f-ba8a-4e32-b867-d90ec54186b4&apos;, 
+            git(url: &apos;https://github.com/ccem-dev/otus-api.git&apos;,
+            credentialsId: &apos;5c08db6f-ba8a-4e32-b867-d90ec54186b4&apos;,
             branch: &quot;master&quot;)
             notifyStart()
         }
@@ -83,7 +91,7 @@ pipeline {
                     notifyEmail()
                 }
             }
-     
+
     }
      stage(&apos;Run Unit Tests&apos;){
          steps {

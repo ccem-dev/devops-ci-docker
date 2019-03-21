@@ -6,7 +6,7 @@
     <jenkins.model.BuildDiscarderProperty>
       <strategy class="hudson.tasks.LogRotator">
         <daysToKeep>-1</daysToKeep>
-        <numToKeep>4</numToKeep>
+        <numToKeep>5</numToKeep>
         <artifactDaysToKeep>-1</artifactDaysToKeep>
         <artifactNumToKeep>-1</artifactNumToKeep>
       </strategy>
@@ -43,16 +43,16 @@
     emailext (
         subject: &apos;$DEFAULT_SUBJECT&apos;,
         body: &apos;$DEFAULT_CONTENT&apos;,
-        recipientProviders: [[$class: &apos;DevelopersRecipientProvider&apos;]], 
+        recipientProviders: [[$class: &apos;DevelopersRecipientProvider&apos;]],
         replyTo: &apos;$DEFAULT_REPLYTO&apos;,
         to: &apos;$DEFAULT_RECIPIENTS&apos;
         )
 }
 def notifyStart(){
-     slackSend channel: &apos;#otus-plataform&apos;, 
-                    color: &apos;#FC0&apos;, 
-                    message: &quot;STARTED: Job &apos;${env.JOB_NAME} [${env.BUILD_NUMBER}]&apos; (${env.BUILD_URL})&quot;, 
-                    teamDomain: &apos;otussolutions&apos;, 
+     slackSend channel: &apos;#otus-plataform&apos;,
+                    color: &apos;#FC0&apos;,
+                    message: &quot;STARTED: Job &apos;${env.JOB_NAME} [${env.BUILD_NUMBER}]&apos; (${env.BUILD_URL})&quot;,
+                    teamDomain: &apos;otussolutions&apos;,
                     token: &apos;OIctpW2cDE8MpIC4uRDfEJpi&apos;
 }
 pipeline {
@@ -84,7 +84,7 @@ pipeline {
             }
         }
     }
-    
+
     stage(&apos;Run Unit Tests&apos;){
          steps {
         sh &apos;mvn -f otus-domain-root/pom.xml test&apos;
