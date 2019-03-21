@@ -15,8 +15,6 @@ services:
     - integration
     volumes:
       - ./jenkins/persistence:/var/jenkins_home:rw
-      - ./jenkins/plugins/install_jenkins_plugins.sh:/install_jenkins_plugins.sh
-      - ./jenkins/plugins/plugins.txt:/plugins.txt
       - ./jenkins/entrypoint.sh:/entrypoint.sh
     restart: always
   nginx:

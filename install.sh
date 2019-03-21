@@ -14,11 +14,16 @@ if [ -z $jenkins ]; then
     jenkins='localhost'
 fi
 
-sudo mkdir ./nginx/persistence/
-sudo cp -R ./nginx/config/ ./nginx/persistence/
+sudo rm -rf ./nginx/persistence/
+sudo chmod -R 777 ./nginx
+mkdir -p ./nginx/persistence/
+cp -R ./nginx/config/* ./nginx/persistence/
 sed -i "s/localhost/$jenkins/g" ./nginx/persistence/sites-enabled/jenkins.conf
 
-sudo mkdir ./jenkins/persistence/
-sudo cp -R jenkins/backup/* jenkins/persistence/
-sudo docker-compose up -d
-sudo docker exec -it jenkins /bin/bash ./entrypoint.sh
+sudo rm -rf ./jenkins/persistence
+sudo chmod -R 777 ./jenkins
+mkdir -p ./jenkins/persistence/plugins
+cp -R jenkins/backup/* jenkins/persistence/
+#É DE EXTREMA IMPORTANCIA O DOWNLOAD DOS PLUGINS ANTES DE INICIAR O CONTAINER
+./jenkins/install-plugins.sh $(echo $(cat ./jenkins/plugins.txt))
+docker-compose up -d
