@@ -1,7 +1,6 @@
 <?xml version='1.1' encoding='UTF-8'?>
 <user>
-  <fullName>diogo.rosas.ferreira</fullName>
-  <description></description>
+  <fullName>noreply</fullName>
   <properties>
     <jenkins.security.ApiTokenProperty>
       <tokenStore>
@@ -11,14 +10,10 @@
     <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.1.18">
       <domainCredentialsMap class="hudson.util.CopyOnWriteMap$Hash"/>
     </com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty>
-    <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.22">
-      <emailAddress>diogo.rosas.ferreira@gmail.com</emailAddress>
-    </hudson.tasks.Mailer_-UserProperty>
     <hudson.plugins.emailext.watching.EmailExtWatchAction_-UserProperty plugin="email-ext@2.63">
       <triggers/>
     </hudson.plugins.emailext.watching.EmailExtWatchAction_-UserProperty>
     <hudson.model.MyViewsProperty>
-      <primaryViewName></primaryViewName>
       <views>
         <hudson.model.AllView>
           <owner class="hudson.model.MyViewsProperty" reference="../../.."/>
@@ -35,14 +30,11 @@
     <hudson.model.PaneStatusProperties>
       <collapsed/>
     </hudson.model.PaneStatusProperties>
-    <hudson.security.HudsonPrivateSecurityRealm_-Details>
-      <passwordHash>#jbcrypt:$2a$10$oa6FBPgUGg5woZ1kErS0NOC5k5zBk2OG9Ei9uKM1GclG2z9R4oB7m</passwordHash>
-    </hudson.security.HudsonPrivateSecurityRealm_-Details>
-    <org.jenkinsci.main.modules.cli.auth.ssh.UserPropertyImpl>
-      <authorizedKeys></authorizedKeys>
-    </org.jenkinsci.main.modules.cli.auth.ssh.UserPropertyImpl>
     <hudson.search.UserSearchProperty>
       <insensitiveSearch>true</insensitiveSearch>
     </hudson.search.UserSearchProperty>
+    <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.22">
+      <emailAddress>noreply@github.com</emailAddress>
+    </hudson.tasks.Mailer_-UserProperty>
   </properties>
 </user>
