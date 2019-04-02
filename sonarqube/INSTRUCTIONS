@@ -1,2 +1,5 @@
 login: admin
 pass: admin
+
+JAVA: mvn -f otus-root/pom.xml sonar:sonar
+JAVASCRIPT: npm run gulp sonar --sonarUrl='http://localhost:9000'
